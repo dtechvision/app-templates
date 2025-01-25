@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: effect_pg_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - telemetry-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.enable-remote-write-receiver
+      - --enable-feature=exemplar-storage
+      - --enable-feature=native-histograms
+    volumes:
+      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - telemetry-network
+
+  tempo:
+    image: grafana/tempo:latest
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    volumes:
+      - ./docker/tempo.yaml:/etc/tempo.yaml
+    ports:
+      - "14268:14268"    # jaeger ingest
+      - "3200:3200"    # tempo
+      - "9095:9095"    # tempo grpc
+      - "4317:4317"    # otlp grpc
+      - "4318:4318"    # otlp http
+      - "9411:9411"    # zipkin
+    networks:
+      - telemetry-network
+
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - ./docker/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yaml
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_FEATURE_TOGGLES_ENABLE=traceqlEditor metricsSummary
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+      - tempo
+    networks:
+      - telemetry-network
+
+networks:
+  telemetry-network:
+    driver: bridge
+
+volumes:
+  postgres_data: 
