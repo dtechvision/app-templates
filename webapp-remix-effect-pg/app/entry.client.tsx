@@ -5,14 +5,29 @@
  */
 
 import { RemixBrowser } from "@remix-run/react";
-import { startTransition, StrictMode } from "react";
+import * as Sentry from "@sentry/remix";
+import { StrictMode, startTransition } from "react";
 import { hydrateRoot } from "react-dom/client";
+
+Sentry.init({
+  dsn: import.meta.env.VITE_SENTRY_DSN,
+
+  integrations: [
+    Sentry.replayIntegration({
+      maskAllText: true,
+      blockAllMedia: true,
+    }),
+  ],
+
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1,
+});
 
 startTransition(() => {
   hydrateRoot(
     document,
     <StrictMode>
       <RemixBrowser />
-    </StrictMode>
+    </StrictMode>,
   );
 });
