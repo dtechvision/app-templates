@@ -1,0 +1,5 @@
+# Get the git root directory
+ROOT_DIR=$(git rev-parse --show-toplevel)
+
+# Change to the repo root directory using absolute path
+cd "$ROOT_DIR/" && ./scripts/dotenv.sh && bun run lint:staged

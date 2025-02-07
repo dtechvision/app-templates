@@ -1,0 +1,8 @@
+# Get the git root directory
+ROOT_DIR=$(git rev-parse --show-toplevel)
+
+# Check if there are changes in webapp-remix-effect-pg
+if git diff --cached --name-only | grep "^webapp-remix-effect-pg/"; then
+  # Change to the webapp-remix-effect-pg directory using absolute path
+  cd "$ROOT_DIR/webapp-remix-effect-pg" && ./scripts/dotenv.sh && bun run lint:staged
+fi

@@ -1,8 +1,8 @@
 import { Layer } from "effect";
+import { SqlLive } from "~/config";
 import { makeRemixRuntime } from "~/lib/utilities";
 import { TelemetryLive } from "./Telemetry";
 import { TodoRepo } from "./TodoRepo";
-import { SqlLive } from "~/config";
 
 const AppLive = Layer.provide(
   Layer.merge(TodoRepo.Live, TelemetryLive),

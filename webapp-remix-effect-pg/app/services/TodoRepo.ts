@@ -68,7 +68,7 @@ const makeTodoRepo = Effect.gen(function* (_) {
 
   const createTodo = (title: string) =>
     Effect.gen(function* () {
-      const result = yield* sql<{
+      const _result = yield* sql<{
         id: number;
         title: string;
         status: "CREATED" | "COMPLETED";

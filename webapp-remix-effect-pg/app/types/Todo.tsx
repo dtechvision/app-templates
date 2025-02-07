@@ -9,7 +9,7 @@ export class Todo extends Schema.Class<Todo>("Todo")({
 }) {
   static encodeArray = flow(
     Schema.encode(Schema.Array(this)),
-    Effect.map((todos): ReadonlyArray<Todo.Encoded> => todos)
+    Effect.map((todos): ReadonlyArray<Todo.Encoded> => todos),
   );
 }
 

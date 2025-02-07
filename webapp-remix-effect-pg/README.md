@@ -12,6 +12,26 @@ This project aims to demonstrate integration of Effect in one typical setup wher
 
 ## Development
 
+### Setup
+
+First get dependencies
+
+```
+bun install
+```
+
+The project expects a `.env` file in the root directory. Use `.env.template` as a template.
+
+To ensure your `.env.template` stays in sync with `.env` in your terminal execute:
+
+```sh
+./scripts/dotenv.sh
+```
+
+this is already setup to run on each precommmit via husky. If you want to rename the env file, please adjust the script or pass in the parameter.
+
+### Get up and running
+
 From your terminal:
 
 ```sh

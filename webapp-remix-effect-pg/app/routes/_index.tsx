@@ -44,7 +44,10 @@ export const TodoRow = ({ todo }: { todo: Todo.Encoded }) => {
           className="destroy"
           type="button"
           onClick={() =>
-            fetcher.submit({ id: todo.id.toString(), _action: "delete" }, { method: "post" })
+            fetcher.submit(
+              { id: todo.id.toString(), _action: "delete" },
+              { method: "post" },
+            )
           }
         />
       </div>
@@ -88,7 +91,7 @@ export const action = loaderFunction(({ request }: ActionFunctionArgs) =>
       }
     }
     return yield* TodoRepo.getAllTodos;
-  })
+  }),
 );
 
 export default function Index() {
