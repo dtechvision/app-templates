@@ -49,6 +49,6 @@ for key in "${env_keys[@]}"; do
     done
     
     if [ "$found" = false ]; then
-        echo "\n$key" >> "$ENV_EXAMPLE"
+        echo "$key" >> "$ENV_EXAMPLE"
     fi
 done
