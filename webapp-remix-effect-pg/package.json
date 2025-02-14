@@ -27,6 +27,8 @@
     "@effect/schema": "^0.75.5",
     "@effect/sql": "^0.25.0",
     "@effect/sql-pg": "^0.26.0",
+    "@farcaster/frame-node": "^0.0.14",
+    "@farcaster/frame-sdk": "^0.0.27",
     "@opentelemetry/exporter-prometheus": "^0.57.0",
     "@opentelemetry/exporter-trace-otlp-http": "^0.57.0",
     "@opentelemetry/sdk-trace-base": "^1.30.0",
